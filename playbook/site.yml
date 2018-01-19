@@ -1,0 +1,17 @@
+- hosts: all
+  become: yes
+  tasks:
+
+  - name: install base packages
+    yum: name={{ item }}
+    with_items:
+    - git
+    - vim
+
+  - name: checkout openshift-ansible
+    git:
+      repo: https://github.com/openshift/openshift-ansible
+      dest: /usr/share/ansible/openshift-ansible
+      version: release-3.6
+
+- include: /usr/share/ansible/openshift-ansible/playbooks/byo/config.yml

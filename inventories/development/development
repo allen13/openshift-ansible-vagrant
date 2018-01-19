@@ -1,0 +1,13 @@
+[development]
+origin-01 ansible_connection=local
+
+[OSEv3:children]
+development
+masters
+nodes
+
+[masters]
+origin-01
+
+[nodes]
+origin-01

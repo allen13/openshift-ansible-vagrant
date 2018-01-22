@@ -1,0 +1,1 @@
+- import_playbook: openshift-ansible/playbooks/byo/openshift-cluster/upgrades/v3_7/upgrade.yml

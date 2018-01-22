@@ -1,0 +1,5 @@
+#!/bin/bash
+
+: "${OCP_VERSION:=3.7}"
+ansible-playbook -i "localhost," -c local  $(dirname $0)/../../playbooks/get-openshift-ansible.yml -e ocp_version=${OCP_VERSION}
+ansible-playbook -i $(dirname $0)/../../inventories/dev/dev $(dirname $0)/../../playbooks/upgrade-cluster.yml -e openshift_deployment_type=origin $@

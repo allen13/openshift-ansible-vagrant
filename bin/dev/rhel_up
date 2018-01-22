@@ -1,0 +1,4 @@
+#!/bin/bash
+
+export DEFAULT_VM_BOX=generic/rhel7
+vagrant up

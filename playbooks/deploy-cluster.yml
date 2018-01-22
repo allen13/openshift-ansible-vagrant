@@ -1,0 +1,6 @@
+- hosts: all
+  tasks:
+    - name: install redhat certs for docker registry
+      yum: name=python-rhsm-certificates
+      
+- import_playbook: openshift-ansible/playbooks/byo/config.yml

@@ -1,3 +1,0 @@
-#!/bin/bash
-
-ansible-playbook -i $(dirname $0)/../inventories/development/development $(dirname $0)/../playbook/site.yml $@

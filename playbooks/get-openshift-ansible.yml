@@ -1,0 +1,7 @@
+- hosts: localhost
+  tasks:
+  - name: checkout openshift-ansible
+    git:
+      repo: https://github.com/openshift/openshift-ansible
+      dest: openshift-ansible
+      version: release-{{ ocp_version }}

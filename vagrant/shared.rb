@@ -1,17 +1,20 @@
-VM_BOX = 'centos/7'
+DEFAULT_VM_BOX = ENV['DEFAULT_VM_BOX'] || 'centos/7'
 
 def create_vm(config, options = {})
   prefix = options.fetch(:prefix, "node")
   id = options.fetch(:id, 1)
   extra_disks = options.fetch(:extra_disks, 0)
   extra_disks_size = options.fetch(:extra_disks_size, 0)
+  vm_box = options.fetch(:vm_box, DEFAULT_VM_BOX)
+  sync = options.fetch(:sync, false)
   vm_name = "%s-%02d" % [prefix, id]
 
   memory = options.fetch(:memory, 1024)
   cpus = options.fetch(:cpus, 1)
 
+  config.vm.synced_folder '.', '/vagrant', disabled: !sync
   config.vm.define vm_name do |node|
-    node.vm.box = VM_BOX
+    node.vm.box = vm_box
     node.vm.hostname = vm_name
 
     private_ip = "192.0.2.10#{id}"
@@ -30,21 +33,15 @@ def create_vm(config, options = {})
       add_extra_disks(vm_name, vb, extra_disks, extra_disks_size) if extra_disks > 0
     end
 
-    node.vm.provision :shell, inline: "yum install ansible -y"
   end
 end
 
 def add_extra_disks(vm_name, vb, extra_disks, extra_disks_size)
   dirname = File.dirname(__FILE__)
 
-  # Disk limit
-  if extra_disks > 3
-    extra_disks = 3
-  end
+  vb.customize ['storagectl', :id, '--name', 'CustomSATA', '--add', 'sata', '--portcount', extra_disks]
 
-  # Add extra disks
-  for i in 1..extra_disks do
-    # Create disk
+  for i in 0..(extra_disks-1) do
     disk_path = "#{dirname}/#{vm_name}-disk-#{i}.vdi"
     unless File.exist?(disk_path)
       vb.customize [
@@ -54,21 +51,11 @@ def add_extra_disks(vm_name, vb, extra_disks, extra_disks_size)
       ]
     end
 
-    # which port and master or slave on ide
-    if i < 2
-      port = 0
-      device = i
-    else
-      port = 1
-      device = i - 2
-    end
-
-    # Attach disk
     vb.customize [
       'storageattach', :id,
-      '--storagectl', 'IDE',
-      '--port', port,
-      '--device', device,
+      '--storagectl', 'CustomSATA',
+      '--port', i,
+      '--device', 0,
       '--type', 'hdd',
       '--medium', disk_path
     ]

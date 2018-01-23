@@ -1,10 +1,11 @@
 containerized: true
-openshift_release: 3.6
-openshift_version: 3.6.1
+openshift_release: 3.7
+openshift_version: 3.7.0
 openshift_disable_check: memory_availability,disk_availability,docker_storage
 openshift_hostname: "{{ private_ip }}"
 openshift_ip: "{{ private_ip }}"
 openshift_public_hostname: "{{ public_ip }}"
 openshift_public_ip: "{{ public_ip }}"
-# openshift_docker_insecure_registries:
-#   - registry.access.redhat.com
+openshift_logging_install_logging: false
+openshift_hosted_prometheus_deploy: true
+openshift_management_install_management: false

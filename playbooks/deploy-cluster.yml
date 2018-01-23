@@ -2,5 +2,10 @@
   tasks:
     - name: install redhat certs for docker registry
       yum: name=python-rhsm-certificates
-      
+
+    - name: add openshift bin dir to system-wide $PATH for cli usage
+      copy:
+        dest: /etc/profile.d/openshift-path.sh
+        content: 'PATH=$PATH:/usr/local/bin'
+
 - import_playbook: openshift-ansible/playbooks/byo/config.yml

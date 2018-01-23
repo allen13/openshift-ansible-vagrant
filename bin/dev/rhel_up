@@ -1,4 +1,4 @@
 #!/bin/bash
 
-export DEFAULT_VM_BOX=generic/rhel7
+export DISTRO=rhel
 vagrant up

@@ -4,10 +4,7 @@
 require_relative './vagrant/shared.rb'
 
 Vagrant.configure("2") do |config|
-  if Vagrant.has_plugin?('vagrant-registration') && ENV.has_key?('RHEL_USER')
-    config.registration.username = ENV['RHEL_USER']
-    config.registration.password = ENV['RHEL_PASS']
-  end
+  register_rhel_subscription(config)
 
   create_vm(
     config,

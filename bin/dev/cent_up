@@ -1,4 +1,4 @@
 #!/bin/bash
 
-export DEFAULT_VM_BOX=centos/7
+export DISTRO=cent
 vagrant up

@@ -1,4 +1,15 @@
-DEFAULT_VM_BOX = ENV['DEFAULT_VM_BOX'] || 'centos/7'
+if ENV['DISTRO'] == 'rhel'
+  DEFAULT_VM_BOX = ENV['DEFAULT_VM_BOX'] || 'generic/rhel7'
+else
+  DEFAULT_VM_BOX = ENV['DEFAULT_VM_BOX'] || 'centos/7'
+end
+
+def register_rhel_subscription(config)
+  if Vagrant.has_plugin?('vagrant-registration') && ENV.has_key?('RHEL_USER') && ENV['DISTRO'] == 'rhel'
+    config.registration.username = ENV['RHEL_USER']
+    config.registration.password = ENV['RHEL_PASS']
+  end
+end
 
 def create_vm(config, options = {})
   prefix = options.fetch(:prefix, "node")

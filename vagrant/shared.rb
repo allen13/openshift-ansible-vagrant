@@ -50,9 +50,12 @@ end
 def add_extra_disks(vm_name, vb, extra_disks, extra_disks_size)
   dirname = File.dirname(__FILE__)
 
-  vb.customize ['storagectl', :id, '--name', 'CustomSATA', '--add', 'sata', '--portcount', extra_disks]
+  # vb.customize ['storagectl', :id, '--name', 'CustomSATA', '--add', 'sata', '--portcount', extra_disks]
+  if extra_disks > 3
+    extra_disks = 3
+  end
 
-  for i in 0..(extra_disks-1) do
+  for i in 1..(extra_disks) do
     disk_path = "#{dirname}/#{vm_name}-disk-#{i}.vdi"
     unless File.exist?(disk_path)
       vb.customize [
@@ -62,11 +65,19 @@ def add_extra_disks(vm_name, vb, extra_disks, extra_disks_size)
       ]
     end
 
+   if i < 2
+     port = 0
+     device = i
+   else
+     port = 1
+     device = i - 2
+   end
+
     vb.customize [
       'storageattach', :id,
-      '--storagectl', 'CustomSATA',
-      '--port', i,
-      '--device', 0,
+      '--storagectl', 'IDE',
+      '--port', port,
+      '--device', device,
       '--type', 'hdd',
       '--medium', disk_path
     ]

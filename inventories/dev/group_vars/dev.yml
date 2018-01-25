@@ -9,3 +9,4 @@ openshift_public_ip: "{{ public_ip }}"
 openshift_logging_install_logging: false
 openshift_hosted_prometheus_deploy: true
 openshift_management_install_management: false
+openshift_master_default_subdomain: "{{ hostvars[groups['nodes'][0]].public_ip }}.xip.io"

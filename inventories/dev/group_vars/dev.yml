@@ -23,3 +23,19 @@ openshift_prometheus_alertbuffer_storage_type: pvc
 openshift_enable_service_catalog: false
 
 openshift_management_install_management: false
+
+images_to_cache:
+- name: openshift/openvswitch
+  tag: "v{{ openshift_version }}"
+- name: openshift/node
+  tag: "v{{ openshift_version }}"
+- name: openshift/origin
+  tag: "v{{ openshift_version }}"
+- name: openshift/origin-pod
+  tag: "v{{ openshift_version }}"
+- name: registry.fedoraproject.org/f26/etcd
+  tag: latest
+- name: gluster/gluster-centos
+  tag: latest
+- name: heketi/heketi
+  tag: latest

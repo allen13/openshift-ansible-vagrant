@@ -1,4 +1,11 @@
+- name: cache images locally and upload them to all servers
+  hosts: all
+  gather_facts: false
+  roles:
+    - cache-images
+
 - hosts: all
+  gather_facts: false
   tasks:
     - name: install redhat certs for docker registry
       yum: name=python-rhsm-certificates

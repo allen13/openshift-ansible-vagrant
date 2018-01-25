@@ -6,6 +6,7 @@ ocp-03 ansible_ssh_host=192.0.2.103 private_ip=192.0.2.103 public_ip=192.0.2.203
 [dev:vars]
 ansible_ssh_user=vagrant
 ansible_become=true
+gathering=smart
 
 [OSEv3:children]
 masters

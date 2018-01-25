@@ -9,3 +9,4 @@
 ssl/
 *.retry
 openshift-ansible/
+*.tar

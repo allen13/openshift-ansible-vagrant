@@ -1,0 +1,49 @@
+- name: make sure docker is installed
+  package: name={{ item }}
+  with_items:
+    - docker
+    - python-docker-py
+
+- name: make sure docker is running
+  systemd: name=docker state=started
+
+- name: check for existing locally cached images
+  local_action:
+    module: stat
+    path: files/{{ item.name | basename }}-{{ item.tag }}.tar
+  with_items: "{{ images_to_cache }}"
+  register: cached_images
+  run_once: true
+
+- name: cache images locally
+  local_action:
+    module: docker_image
+    name: "{{ item.item.name }}"
+    tag: "{{ item.item.tag }}"
+  run_once: true
+  when: not item.stat.exists
+  with_items: "{{ cached_images.results|list }}"
+
+- name: convert locally cached images to archives
+  local_action:
+    module: docker_image
+    name: "{{ item.item.name }}"
+    tag: "{{ item.item.tag }}"
+    archive_path: files/{{ item.item.name | basename }}-{{ item.item.tag }}.tar
+  run_once: true
+  when: not item.stat.exists
+  with_items: "{{ cached_images.results|list }}"
+
+- name: copy archived images to servers
+  copy:
+    src: files/{{ item.name | basename }}-{{ item.tag }}.tar
+    dest: /root/
+  with_items: "{{ images_to_cache }}"
+
+
+- name: load archived images
+  docker_image:
+    name: "{{ item.name }}"
+    tag: "{{ item.tag }}"
+    load_path: /root/{{ item.name | basename }}-{{ item.tag }}.tar
+  with_items: "{{ images_to_cache }}"

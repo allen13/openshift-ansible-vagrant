@@ -1,12 +1,25 @@
 containerized: true
+
 openshift_release: 3.7
 openshift_version: 3.7.0
-openshift_disable_check: memory_availability,disk_availability,docker_storage
+
 openshift_hostname: "{{ private_ip }}"
+openshift_master_default_subdomain: "{{ hostvars[groups['nodes'][0]].public_ip }}.xip.io"
 openshift_ip: "{{ private_ip }}"
 openshift_public_hostname: "{{ public_ip }}"
 openshift_public_ip: "{{ public_ip }}"
+
+openshift_disable_check: memory_availability,disk_availability,docker_storage
+
+openshift_hosted_registry_storage_kind: glusterfs
+
 openshift_logging_install_logging: false
+
 openshift_hosted_prometheus_deploy: true
+openshift_prometheus_storage_type: pvc
+openshift_prometheus_alertmanager_storage_type: pvc
+openshift_prometheus_alertbuffer_storage_type: pvc
+
+openshift_enable_service_catalog: false
+
 openshift_management_install_management: false
-openshift_master_default_subdomain: "{{ hostvars[groups['nodes'][0]].public_ip }}.xip.io"

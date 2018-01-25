@@ -25,4 +25,14 @@ Vagrant.configure("2") do |config|
     extra_disks: 3,
     extra_disks_size: 40
   )
+
+  create_vm(
+    config,
+    id: 3,
+    prefix: "ocp",
+    cpus: 1,
+    memory: 1024,
+    extra_disks: 3,
+    extra_disks_size: 40
+  )
 end

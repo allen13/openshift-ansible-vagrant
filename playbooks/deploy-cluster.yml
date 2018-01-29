@@ -1,3 +1,19 @@
+- name: patch openshift-ansible
+  hosts: masters[0]
+  gather_facts: false
+  roles:
+    - openshift_ansible_patches
+  tags:
+    - openshift_ansible_patches
+
+- name: install openshift master extensions
+  hosts: masters
+  gather_facts: false
+  roles:
+    - openshift_master_extensions
+  tags:
+    - openshift_master_extensions
+    
 - name: cache images locally and upload them to all servers
   hosts: all
   gather_facts: false

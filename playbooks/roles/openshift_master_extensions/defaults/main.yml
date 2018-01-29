@@ -1,0 +1,2 @@
+openshift_master_extension_files:
+- disable-landing-page.js

@@ -1,0 +1,4 @@
+#!/bin/bash
+
+: "${OCP_VERSION:=3.7}"
+ansible-playbook -i $(dirname $0)/../../inventories/dev/dev $(dirname $0)/../../playbooks/update-master-nodes.yml -e openshift_deployment_type=origin $@

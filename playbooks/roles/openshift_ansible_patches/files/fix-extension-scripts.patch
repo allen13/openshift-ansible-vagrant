@@ -1,0 +1,14 @@
+diff --git a/playbooks/common/openshift-master/tasks/wire_aggregator.yml b/playbooks/common/openshift-master/tasks/wire_aggregator.yml
+index 9bc8268ca..a8b6ac8b7 100644
+--- a/playbooks/common/openshift-master/tasks/wire_aggregator.yml
++++ b/playbooks/common/openshift-master/tasks/wire_aggregator.yml
+@@ -168,7 +168,8 @@
+     - key: authConfig.requestHeader.extraHeaderPrefixes
+       value: [X-Remote-Extra-]
+     - key: assetConfig.extensionScripts
+-      value: [/etc/origin/master/openshift-ansible-catalog-console.js]
++      value: /etc/origin/master/openshift-ansible-catalog-console.js
++      action: append
+     - key: kubernetesMasterConfig.apiServerArguments.runtime-config
+       value: [apis/settings.k8s.io/v1alpha1=true]
+     - key: admissionConfig.pluginConfig.PodPreset.configuration.kind

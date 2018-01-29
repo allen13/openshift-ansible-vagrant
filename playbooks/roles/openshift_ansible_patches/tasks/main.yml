@@ -1,0 +1,8 @@
+- name: apply openshift-ansible patches
+  local_action:
+    module: patch
+    src: "{{ item }}"
+    basedir: openshift-ansible/
+    strip: 1
+  run_once: true
+  with_items: "{{ openshift_ansible_patches }}"

@@ -1,0 +1,2 @@
+openshift_ansible_patches:
+- fix-extension-scripts.patch

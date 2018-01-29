@@ -1,0 +1,6 @@
+- name: create extensions directory
+  file: path=/etc/origin/master/extensions state=directory
+
+- name: install extensions
+  template: src={{ item }} dest=/etc/origin/master/extensions
+  with_items: "{{ openshift_master_extension_files }}"

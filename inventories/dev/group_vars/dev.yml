@@ -5,6 +5,8 @@ openshift_version: 3.7.0
 
 openshift_hostname: "{{ private_ip }}"
 openshift_master_default_subdomain: "{{ hostvars[groups['nodes'][0]].public_ip }}.xip.io"
+openshift_master_extension_scripts:
+- /etc/origin/master/extensions/disable-landing-page.js
 openshift_ip: "{{ private_ip }}"
 openshift_public_hostname: "{{ public_ip }}"
 openshift_public_ip: "{{ public_ip }}"

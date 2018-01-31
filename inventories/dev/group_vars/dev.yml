@@ -28,17 +28,35 @@ openshift_enable_service_catalog: false
 openshift_management_install_management: false
 
 images_to_cache:
-- name: openshift/openvswitch
+- name: docker.io/openshift/openvswitch
   tag: "v{{ openshift_version }}"
-- name: openshift/node
+- name: docker.io/openshift/node
   tag: "v{{ openshift_version }}"
-- name: openshift/origin
+- name: docker.io/openshift/origin
   tag: "v{{ openshift_version }}"
-- name: openshift/origin-pod
+- name: docker.io/openshift/origin-pod
   tag: "v{{ openshift_version }}"
+- name: docker.io/openshift/origin-deployer
+  tag: "v{{ openshift_version }}"
+- name: docker.io/openshift/origin-haproxy-router
+  tag: "v{{ openshift_version }}"
+- name: docker.io/openshift/origin-docker-registry
+  tag: "v{{ openshift_version }}"
+- name: docker.io/openshift/oauth-proxy
+  tag: v1.0.0
 - name: registry.fedoraproject.org/f26/etcd
   tag: latest
-- name: gluster/gluster-centos
+- name: docker.io/gluster/gluster-centos
   tag: latest
-- name: heketi/heketi
+- name: docker.io/gluster/gluster-centos
   tag: latest
+- name: docker.io/gluster/glusterblock-provisioner
+  tag: latest
+- name: docker.io/heketi/heketi
+  tag: latest
+- name: docker.io/openshift/prometheus
+  tag: v2.0.0
+- name: docker.io/openshift/prometheus-alert-buffer
+  tag: v0.0.2
+- name: docker.io/openshift/prometheus-alertmanager
+  tag: v0.9.1

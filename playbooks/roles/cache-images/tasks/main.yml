@@ -11,6 +11,8 @@
   local_action:
     module: stat
     path: files/{{ item.name | basename }}-{{ item.tag }}.tar
+    get_checksum: no
+    get_md5: no
   with_items: "{{ images_to_cache }}"
   register: cached_images
   run_once: true
@@ -38,7 +40,10 @@
   copy:
     src: files/{{ item.name | basename }}-{{ item.tag }}.tar
     dest: /root/
+    force: no
   with_items: "{{ images_to_cache }}"
+  register: result
+  until: result | success
 
 
 - name: load archived images
@@ -47,3 +52,5 @@
     tag: "{{ item.tag }}"
     load_path: /root/{{ item.name | basename }}-{{ item.tag }}.tar
   with_items: "{{ images_to_cache }}"
+  register: result
+  until: result | success

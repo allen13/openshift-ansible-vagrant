@@ -13,7 +13,7 @@
     - openshift_master_extensions
   tags:
     - openshift_master_extensions
-    
+
 - name: cache images locally and upload them to all servers
   hosts: all
   gather_facts: false
